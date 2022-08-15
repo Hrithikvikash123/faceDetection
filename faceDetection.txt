@@ -1,0 +1,20 @@
+import cv2  # face detection
+import numpy as np
+import matplotlib.pyplot as plt
+
+cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+video = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = video.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    img = cascade.detectMultiScale(gray, 1.1, 5)
+    for (x, y, w, h) in img:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+    cv2.imshow("image detected", frame)
+    key = cv2.waitKey(30)
+    if key == 27:
+        break
+
+video.release()
